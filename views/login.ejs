@@ -6,16 +6,30 @@
     <title>Login - Cybersecurity Awareness</title>
     <link rel="stylesheet" href="/main.css">
 </head>
-<body>
+
+<body id="login-page"> <!-- Add unique id for the whole login page -->
+
+  <nav id="login-nav"> <!-- Add id for the navbar specific to login page -->
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="modules">Modules</a></li>
+        <li><a href="quiz">Quiz</a></li>
+        <li><a href="contact">Contact</a></li>
+        <li><a href="users/login">Login</a></li>
+    </ul>
+  </nav>
+
+  <div class="login-container"> <!-- Added class for login page container -->
     <div class="form-container">
         <h2>Login</h2>
-        <form id="login form">
-            <input type="email" id="login-email" placeholder="Enter Email" required>
-            <input type="password" id="login-password" placeholder="Enter Password" required>
-            <button type="submit">Login</button>
+        <form id="login-form">
+            <input type="email" id="login-email" class="login-input" placeholder="Enter Email" required>
+            <input type="password" id="login-password" class="login-input" placeholder="Enter Password" required>
+            <button type="submit" class="login-button">Login</button>
         </form>
-        <p>Don't have an account? <a href="register.ejs">Register here</a></p>
+        <p class="register-link">Don't have an account? <a href="/register.ejs">Register here</a></p>
     </div>
+  </div>
 
 </body>
 </html>

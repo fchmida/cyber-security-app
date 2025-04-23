@@ -11,5 +11,7 @@ router.get('/login', function (req, res) {
     res.render('login.ejs');
 })
 
+
+
 // Export the router
 module.exports = router;
