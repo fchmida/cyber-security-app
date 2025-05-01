@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { isAuthenticated } = require('../middleware/auth');
 
 function startQuiz() {
     alert("Quiz will start soon!");
@@ -10,14 +11,14 @@ router.get('/', function (req, res) {
     res.render('index.ejs');
 });
 
-// Modules page (public access)
-router.get('/modules', function (req, res) {
-    res.render('modules.ejs');
+// Modules page (private access)
+router.get('/modules', isAuthenticated, (req, res) => {
+    res.render('modules', {user: req.session.user}); //pass the user to template if needed
 });
 
-// Quiz page (public access)
-router.get('/quiz', function (req, res) {
-    res.render('quiz.ejs');
+// Quiz page (private access)
+router.get('/quiz', isAuthenticated, (req, res) => {
+    res.render('quiz', {user:req.session.user});
 });
 
 // Contact page (public access)

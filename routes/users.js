@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { isAuthenticated } = require('../middleware/auth');
 
 //register routes
 router.get('/register', function (req, res) {
