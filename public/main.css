@@ -249,3 +249,12 @@ button:hover {
 .login-link a:hover {
     text-decoration: underline;
 }
+
+.modules-container a {
+    color: #219EBC;
+    text-decoration: none;
+}
+
+.modules-container a:hover {
+    text-decoration: underline;
+}

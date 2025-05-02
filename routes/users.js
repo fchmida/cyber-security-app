@@ -7,8 +7,27 @@ const { check, validationResult } = require('express-validator');
 
 // Dashboard route (private access)
 router.get('/dashboard', isAuthenticated, (req, res) => {
-    res.render('dashboard', {user: req.session.user});
+    console.log("Dashboard route hit by user:", req.session.user);
+
+    const userId = req.session.user.id;
+
+    const sql = 'SELECT quiz_name, score, DATE_FORMAT(taken_at, "%Y-%m-%d %H:%i") AS taken_date FROM quiz_scores WHERE user_id = ? ORDER BY taken_at DESC';
+
+    db.query(sql, [userId], (err, results) => {
+        if (err) {
+            console.error('Error fetching quiz scores:', err);
+            return res.status(500).send('Server error');
+        }
+
+        console.log("Scores retrieved:", results);  // Debug log
+        res.render('dashboard', {
+            user: req.session.user,
+            scores: results || []
+        });
+    });
 });
+
+
 
 //register routes
 router.get('/register', function (req, res) {

@@ -18,6 +18,7 @@
       <li><a href="/modules">Modules</a></li>
       <li><a href="/quiz">Quiz</a></li>
       <li><a href="/contact">Contact</a></li>
+      <li><a href="dashboard">Dashboard</a></li>
       <li><a href="/users/logout">Logout</a></li>
     </ul>
   </nav>
@@ -25,17 +26,45 @@
   <main>
     <div class="card" id="dashboard">
       <h2>Your Dashboard</h2>
-      <p>Welcome to your personalized dashboard. Here you can access your modules, quizzes, and more.</p>
-      <div>
+      <p>Welcome to your personalized dashboard. Here you can access your modules, quizzes, and track your progress.</p>
+      
+      <section class="dashboard-section">
         <h3>Modules</h3>
         <p>Explore educational modules and test your knowledge.</p>
         <a href="/modules" class="button">Go to Modules</a>
-      </div>
-      <div>
+      </section>
+
+      <section class="dashboard-section">
         <h3>Quiz Progress</h3>
         <p>Check your quiz progress and scores.</p>
         <a href="/quiz" class="button">Take a Quiz</a>
-      </div>
+      </section>
+
+      <section class="dashboard-section">
+        <h3>Your Quiz Scores</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Quiz</th>
+              <th>Score</th>
+              <th>Date Taken</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (scores.length > 0) { %>
+              <% scores.forEach(score => { %>
+                <tr>
+                  <td><%= score.quiz_name %></td>
+                  <td><%= score.score %> %</td>
+                  <td><%= score.taken_date %></td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr><td colspan="3">No quizzes taken yet.</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </section>
     </div>
   </main>
 
