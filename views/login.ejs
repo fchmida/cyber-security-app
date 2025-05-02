@@ -22,11 +22,11 @@
   <div class="login-container"> <!-- Added class for login page container -->
     <div class="form-container">
         <h2>Login</h2>
-        <form id="login-form">
-            <input type="email" id="login-email" class="login-input" placeholder="Enter Email" required>
-            <input type="password" id="login-password" class="login-input" placeholder="Enter Password" required>
-            <button type="submit" class="login-button">Login</button>
-        </form>
+        <form action="/users/login" method="POST">
+          <input type="text" name="username" id="username" class="login-input" placeholder="Enter Username" required>
+          <input type="password" name="password" id="login-password" class="login-input" placeholder="Enter Password" required>
+          <button type="submit" class="login-button">Login</button>
+      </form>      
         <p class="register-link">Don't have an account? <a href="/users/register">Register here</a></p>
     </div>
   </div>

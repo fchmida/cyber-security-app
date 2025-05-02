@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express(); 
 const mysql = require('mysql2');
+const expressSanitizer = require('express-sanitizer');
+const session = require('express-session');
+const validator = require ('express-validator');
 
 const port = 8000;
+
+app.use(expressSanitizer());
 
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
@@ -30,9 +35,7 @@ global.db = db;
 
 // Define our application-specific data
 // app.locals.financeData = {appName:"Personal Finance Tracker"};
-
-//set up sessions
-const session = require('express-session');
+;
 
 app.use(session({
   secret: 'yourSecretKey',
@@ -46,6 +49,9 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user || null; // Set `user` for all templates
     next();
 });  
+
+//middleware for parsing form data
+app.use(express.urlencoded({ extended: true }));
 
 // Use main routes for general routes (home, modules, quiz, contact)
 const mainRoutes = require("./routes/main");

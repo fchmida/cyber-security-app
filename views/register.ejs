@@ -22,15 +22,21 @@
   <div class="register-container"> <!-- Unique container class -->
     <div class="register-form-container"> <!-- Unique form wrapper -->
         <h2>Register</h2>
-        <form id="register-form">
-            <input type="text" id="register-username" class="register-input" placeholder="Enter Username" required>
-            <input type="email" id="register-email" class="register-input" placeholder="Enter Email" required>
-            <input type="password" id="register-password" class="register-input" placeholder="Enter Password" required>
+        <form action="/users/registered" id="register-form" method="POST">
+            <input type="text" name="username" id="register-username" class="register-input" placeholder="Enter Username" required>
+            <input type="email" name="email" id="register-email" class="register-input" placeholder="Enter Email" required>
+            <input type="password" name="password" id="register-password" class="register-input" placeholder="Enter Password" required>
             <button type="submit" class="register-button">Register</button>
         </form>
         <p class="login-link">Already have an account? <a href="/users/login">Login here</a></p>
     </div>
   </div>
-
+  <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+    <ul class="error-messages">
+      <% errors.forEach(function(error) { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  <% } %>
 </body>
 </html>
