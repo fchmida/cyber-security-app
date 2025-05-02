@@ -16,6 +16,12 @@ router.get('/modules', isAuthenticated, (req, res) => {
     res.render('modules', {user: req.session.user}); //pass the user to template if needed
 });
 
+// Modules page (private access)
+router.get('/modules/security', isAuthenticated, (req, res) => {
+    res.render('modules/security', {user: req.session.user}); //pass the user to template if needed
+});
+
+
 // Quiz page (private access)
 router.get('/quiz', isAuthenticated, (req, res) => {
     res.render('quiz', {user: req.session.user});

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Password Security Module</title>
+  <link rel="stylesheet" href="/main.css"/>
+  <style>
+    body {
+      background-color: #f4f4f9;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+      padding: 2em;
+    }
+
+    .slide {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    h2 {
+      color: #023047;
+    }
+
+    input, label {
+      font-size: 1em;
+    }
+
+    input[type="text"] {
+      padding: 0.8em;
+      width: 100%;
+      max-width: 400px;
+      margin-top: 1em;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 1.5em;
+      padding: 0.8em 1.5em;
+      border: none;
+      border-radius: 8px;
+      background-color: #219EBC;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005f8e;
+    }
+
+    .feedback {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header and Navbar -->
+  <header>
+    <h1>Cybersecurity Awareness Platform</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/modules">Modules</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <% if (user) { %>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/users/login">Login</a></li>
+      <% } %>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- Slide 1 -->
+    <section class="slide active" id="slide-1">
+      <h2>What is Password Security?</h2>
+      <p>Passwords are the keys to your digital life. A strong password helps protect your accounts from unauthorized access.</p>
+      <button onclick="nextSlide()">Next</button>
+    </section>
+
+    <!-- Slide 2 -->
+    <section class="slide" id="slide-2">
+      <h2>What Makes a Good Password?</h2>
+      <ul style="text-align: left;">
+        <li>✅ At least 8 characters long.</li>
+        <li>✅ Use a mix of uppercase, lowercase, numbers, and symbols.</li>
+        <li>✅ <b>Do not</b> use personal info.</li>
+        <li>✅ Use different passwords for different sites.</li>
+      </ul>
+      <button onclick="nextSlide()">Next</button>
+    </section>
+
+    <!-- Slide 3 -->
+    <section class="slide" id="slide-3">
+      <h2>Try Making a Strong Password</h2>
+      <input type="text" id="passwordInput" placeholder="Enter a password to test" />
+      <div id="passwordFeedback" class="feedback"></div>
+      <button onclick="nextSlide()">Next</button>
+    </section>
+
+    <!-- Slide 4 -->
+    <section class="slide" id="slide-4">
+      <h2>What is Two-Factor Authentication?</h2>
+      <p>2FA adds a second step to the login process - like entering a code sent to your phone. It's a powerful layer of protection.</p>
+      <button onclick="nextSlide()">Next</button>
+    </section>
+
+    <!-- Slide 5 -->
+    <section class="slide" id="slide-5">
+      <h2>Choose the Best 2FA Option</h2>
+      <form id="quizForm" onsubmit="checkAnswer(event)">
+        <label><input type="radio" name="q1" value="a" /> Email code</label><br />
+        <label><input type="radio" name="q1" value="b" /> SMS code</label><br />
+        <label><input type="radio" name="q1" value="c" /> Authenticator app (e.g. Google Auth)</label><br />
+        <button type="submit">Submit</button>
+        <div id="quizResult" class="feedback"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cybersecurity Awareness Platform</p>
+  </footer>
+
+  <script>
+    let current = 1;
+
+    function nextSlide() {
+      const currentSlide = document.getElementById(`slide-${current}`);
+      const next = document.getElementById(`slide-${++current}`);
+      if (currentSlide) currentSlide.classList.remove('active');
+      if (next) next.classList.add('active');
+    }
+
+    document.getElementById("passwordInput").addEventListener("input", function () {
+      const pwd = this.value;
+      const feedback = document.getElementById("passwordFeedback");
+      const strength = checkPasswordStrength(pwd);
+      feedback.textContent = strength.message;
+      feedback.style.color = strength.color;
+    });
+
+    function checkPasswordStrength(pwd) {
+      const lengthOK = pwd.length >= 8;
+      const hasUpper = /[A-Z]/.test(pwd);
+      const hasLower = /[a-z]/.test(pwd);
+      const hasNum = /\d/.test(pwd);
+      const hasSym = /[\W_]/.test(pwd);
+
+      if (!lengthOK) return { message: "❌ Too short", color: "red" };
+      if (hasUpper && hasLower && hasNum && hasSym) {
+        return { message: "✅ Strong password", color: "green" };
+      } else {
+        return { message: "⚠️ Use a mix of letters, numbers & symbols", color: "orange" };
+      }
+    }
+
+    function checkAnswer(e) {
+      e.preventDefault();
+      const result = document.querySelector('input[name="q1"]:checked');
+      const feedback = document.getElementById("quizResult");
+
+      if (!result) {
+        feedback.textContent = "Please select an answer.";
+        feedback.style.color = "red";
+        return;
+      }
+
+      if (result.value === "c") {
+        feedback.textContent = "✅ Correct! Authenticator apps are most secure.";
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = "⚠️ Not quite. Authenticator apps are better than SMS or email.";
+        feedback.style.color = "orange";
+      }
+    }
+  </script>
+
+</body>
+</html>
