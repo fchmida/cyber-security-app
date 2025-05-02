@@ -5,6 +5,10 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 const { check, validationResult } = require('express-validator');
 
+// Dashboard route (private access)
+router.get('/dashboard', isAuthenticated, (req, res) => {
+    res.render('dashboard', {user: req.session.user});
+});
 
 //register routes
 router.get('/register', function (req, res) {
@@ -107,7 +111,7 @@ router.post('/login', function (req, res) {
                 };
 
                 console.log("Session data set:", req.session.user);
-                return res.redirect('/');  // Change this to the appropriate route
+                return res.redirect('/users/dashboard');  // redirects to dashboard after login
             } else {
                 console.log("Incorrect password.");
                 return res.render('login.ejs', {

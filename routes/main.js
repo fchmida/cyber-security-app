@@ -18,7 +18,7 @@ router.get('/modules', isAuthenticated, (req, res) => {
 
 // Quiz page (private access)
 router.get('/quiz', isAuthenticated, (req, res) => {
-    res.render('quiz', {user:req.session.user});
+    res.render('quiz', {user: req.session.user});
 });
 
 // Contact page (public access)

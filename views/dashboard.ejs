@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Dashboard - Cybersecurity Awareness Platform</title>
+  <link rel="stylesheet" href="/main.css"/>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome, <%= user.username %>!</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/modules">Modules</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/users/logout">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="card" id="dashboard">
+      <h2>Your Dashboard</h2>
+      <p>Welcome to your personalized dashboard. Here you can access your modules, quizzes, and more.</p>
+      <div>
+        <h3>Modules</h3>
+        <p>Explore educational modules and test your knowledge.</p>
+        <a href="/modules" class="button">Go to Modules</a>
+      </div>
+      <div>
+        <h3>Quiz Progress</h3>
+        <p>Check your quiz progress and scores.</p>
+        <a href="/quiz" class="button">Take a Quiz</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cybersecurity Awareness Platform</p>
+  </footer>
+
+</body>
+</html>
