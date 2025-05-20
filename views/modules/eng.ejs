@@ -26,3 +26,179 @@
       <% } %>
     </ul>
   </nav>
+
+  <div class="social-engineering-module">
+    <!-- Info slide -->
+    <div class="slide active" id="slide-1">
+      <div class="info-box">
+        <h2>Mitigating Social Engineering in Business</h2>
+        <p>Social engineering tricks people into giving away confidential info or access. Learn to spot these tactics with 5 scenarios.</p>
+        <button class="next-button" onclick="nextSlide()">Start</button>
+      </div>
+    </div>
+
+    <!-- Scenario 1 -->
+    <div class="slide" id="slide-2">
+      <h3>Scenario 1: Suspicious Phone Call</h3>
+      <div class="email-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone call" class="scenario-image" />
+        <div class="email-header">From: Unknown Caller</div>
+        <div class="email-body">
+          <p>You get a call from “IT support” asking for your login credentials to fix an urgent problem.</p>
+        </div>
+      </div>
+      <div class="buttons">
+        <button onclick="answer(true)">Social Engineering</button>
+        <button onclick="answer(false)">Safe</button>
+      </div>
+      <p class="feedback" id="feedback-1"></p>
+      <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+    </div>
+
+    <!-- Scenario 2 -->
+    <div class="slide" id="slide-3">
+      <h3>Scenario 2: USB Drive Found</h3>
+      <div class="email-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/2014/2014999.png" alt="USB drive" class="scenario-image" />
+        <div class="email-header">Found Device</div>
+        <div class="email-body">
+          <p>You find a USB labeled “Confidential” in the parking lot and think about plugging it in.</p>
+        </div>
+      </div>
+      <div class="buttons">
+        <button onclick="answer(true)">Social Engineering</button>
+        <button onclick="answer(false)">Safe</button>
+      </div>
+      <p class="feedback" id="feedback-2"></p>
+      <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+    </div>
+
+    <!-- Scenario 3 -->
+    <div class="slide" id="slide-4">
+      <h3>Scenario 3: Email From CEO</h3>
+      <div class="email-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="Empty Profile Picture" class="scenario-image" />
+        <div class="email-header">From: CEO (ceo@company.com)</div>
+        <div class="email-body">
+          <p>The CEO emails requesting an urgent wire transfer, stressing secrecy.</p>
+        </div>
+      </div>
+      <div class="buttons">
+        <button onclick="answer(true)">Social Engineering</button>
+        <button onclick="answer(false)">Safe</button>
+      </div>
+      <p class="feedback" id="feedback-3"></p>
+      <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+    </div>
+
+    <!-- Scenario 4 -->
+    <div class="slide" id="slide-5">
+      <h3>Scenario 4: Unexpected Visitor</h3>
+      <div class="email-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/4413/4413369.png" alt="Visitor badge" class="scenario-image" />
+        <div class="email-header">Visitor</div>
+        <div class="email-body">
+          <p>Someone unknown asks to access the server room claiming to be an IT technician.</p>
+        </div>
+      </div>
+      <div class="buttons">
+        <button onclick="answer(true)">Social Engineering</button>
+        <button onclick="answer(false)">Safe</button>
+      </div>
+      <p class="feedback" id="feedback-4"></p>
+      <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+    </div>
+
+    <!-- Scenario 5 -->
+    <div class="slide" id="slide-6">
+      <h3>Scenario 5: Software Update Popup</h3>
+      <div class="email-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/13754/13754457.png" alt="Software update" class="scenario-image" />
+        <div class="email-header">Notification</div>
+        <div class="email-body">
+          <p>A popup asks you to install a critical update via a link.</p>
+        </div>
+      </div>
+      <div class="buttons">
+        <button onclick="answer(true)">Social Engineering</button>
+        <button onclick="answer(false)">Safe</button>
+      </div>
+      <p class="feedback" id="feedback-5"></p>
+      <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+    </div>
+
+    <!-- Summary slide -->
+    <div class="slide" id="slide-7">
+      <h3>Well done!</h3>
+      <p id="summary-message"></p>
+      <button class="restart-button" onclick="restart()">Retake Module</button>
+    </div>
+  </div>
+</main>
+
+<script>
+  let currentSlide = 1;
+  let score = 0;
+
+  const correctAnswers = [true, true, true, true, false];
+  const explanations = [
+    "✅ Correct! Legit IT support won't ask for your password over the phone.",
+    "✅ Correct! Never plug unknown USB drives; they may contain malware.",
+    "✅ Correct! Verify urgent wire transfers with the CEO through another channel.",
+    "✅ Correct! Always verify unexpected visitors before allowing access.",
+    "✅ Correct! Software updates come from verified sources; always check."
+  ];
+  const incorrectExplanations = [
+    "❌ Incorrect. This was social engineering: don't give passwords over the phone.",
+    "❌ Incorrect. This USB could contain malware, do not plug it in.",
+    "❌ Incorrect. Verify wire transfer requests carefully.",
+    "❌ Incorrect. Verify unknown visitors before access.",
+    "❌ Incorrect. This popup is safe; verify update sources."
+  ];
+
+  function nextSlide() {
+    if(currentSlide < 7) {
+      document.getElementById(`slide-${currentSlide}`).classList.remove("active");
+      currentSlide++;
+      document.getElementById(`slide-${currentSlide}`).classList.add("active");
+
+      if(currentSlide === 7) {
+        document.getElementById("summary-message").textContent = `You got ${score} out of 5 correct.`;
+      }
+    }
+  }
+
+  function answer(userAnswer) {
+    const index = currentSlide - 2;
+    const feedbackEl = document.getElementById(`feedback-${index + 1}`);
+    const isCorrect = correctAnswers[index] === userAnswer;
+
+    if (isCorrect) score++;
+
+    feedbackEl.textContent = isCorrect ? explanations[index] : incorrectExplanations[index];
+
+    // Disable buttons after answering
+    const buttons = document.querySelectorAll(`#slide-${currentSlide} .buttons button`);
+    buttons.forEach(btn => btn.disabled = true);
+
+    // Enable next button
+    const nextBtn = document.querySelector(`#slide-${currentSlide} .next-button`);
+    nextBtn.disabled = false;
+  }
+
+  function restart() {
+    // Reset score and slide
+    score = 0;
+    document.getElementById(`slide-${currentSlide}`).classList.remove("active");
+    currentSlide = 1;
+    document.getElementById(`slide-${currentSlide}`).classList.add("active");
+
+    // Clear feedback and enable buttons
+    for(let i=1; i<=5; i++) {
+      document.getElementById(`feedback-${i}`).textContent = "";
+      const buttons = document.querySelectorAll(`#slide-${i+1} .buttons button`);
+      buttons.forEach(btn => btn.disabled = false);
+      document.querySelector(`#slide-${i+1} .next-button`).disabled = true;
+    }
+  }
+</script>
