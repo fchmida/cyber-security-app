@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cybersecurity Awareness Platform</title>
+  <title>Social Engineering Module</title>
   <link rel="stylesheet" href="/main.css"/>
 </head>
 <body>
@@ -15,9 +15,14 @@
   <nav>
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="modules">Modules</a></li>
-      <li><a href="quiz">Quiz</a></li>
-      <li><a href="contact">Contact</a></li>
-      <li><a href="users/login">Login</a></li>
+      <li><a href="/modules">Modules</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <% if (user) { %>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/users/login">Login</a></li>
+      <% } %>
     </ul>
   </nav>

@@ -335,21 +335,21 @@ button:hover {
 
     /* phishing page */
  /* General layout */
-body {
+.phishing-module body {
   font-family: Arial, sans-serif;
   background-color: #f3f4f6;
   margin: 0;
   padding: 0;
 }
 
-main {
+.phishing-module main {
   padding: 2rem;
   display: flex;
   justify-content: center;
 }
 
 /* Slide container */
-.slide {
+.phishing-module .slide {
   display: none;
   max-width: 600px;
   background: white;
@@ -358,19 +358,19 @@ main {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.slide.active {
+.phishing-module .slide.active {
   display: block;
 }
 
 /* Email look */
-.email-box {
+.phishing-module .email-box {
   border: 1px solid #d1d5db;
   border-radius: 8px;
   background-color: #ffffff;
   padding: 1rem;
 }
 
-.email-header {
+.phishing-module .email-header {
   background-color: #f9fafb;
   border-bottom: 1px solid #e5e7eb;
   padding: 0.5rem 1rem;
@@ -378,18 +378,18 @@ main {
   color: #374151;
 }
 
-.email-body {
+.phishing-module .email-body {
   padding: 1rem;
   font-size: 1rem;
   color: #111827;
 }
 
 /* Buttons */
-.buttons {
+.phishing-module .buttons {
   margin-top: 1rem;
 }
 
-button {
+.phishing-module button {
   padding: 0.5rem 1rem;
   margin: 0.25rem;
   border: none;
@@ -401,35 +401,35 @@ button {
   transition: background 0.3s ease;
 }
 
-button:hover {
+.phishing-module button:hover {
   background-color: #2563eb;
 }
 
-button:disabled {
+.phishing-module button:disabled {
   background-color: #9ca3af;
   cursor: not-allowed;
 }
 
 /* Feedback */
-.feedback {
+.phishing-module .feedback {
   margin-top: 1rem;
   font-weight: bold;
 }
 
 /* Next & Restart buttons */
-.next-button,
-.restart-button {
+.phishing-module .next-button,
+.phishing-module .restart-button {
   margin-top: 1rem;
   background-color: #10b981;
 }
 
-.next-button:hover,
-.restart-button:hover {
+.phishing-module .next-button:hover,
+.phishing-module .restart-button:hover {
   background-color: #059669;
 }
 
 /* Info box style for first slide */
-.info-box {
+.phishing-module .info-box {
   background: #e0f2fe;
   border-left: 6px solid #0284c7;
   padding: 18px 20px;
@@ -442,3 +442,95 @@ button:disabled {
 }
 
 /* safe browsing module */
+.safe-browsing-module body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f4f6;
+  margin: 0;
+  padding: 0;
+}
+
+.safe-browsing-module main {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Slide container */
+.safe-browsing-module .slide {
+  display: none;
+  max-width: 600px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.safe-browsing-module .slide.active {
+  display: block;
+}
+
+/* Email look */
+.safe-browsing-module .email-box {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 1rem;
+}
+
+.safe-browsing-module .email-header {
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.safe-browsing-module .email-body {
+  padding: 1rem;
+  font-size: 1rem;
+  color: #111827;
+}
+
+/* Buttons */
+.safe-browsing-module .buttons {
+  margin-top: 1rem;
+}
+
+.safe-browsing-module button {
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.safe-browsing-module button:hover {
+  background-color: #2563eb;
+}
+
+.safe-browsing-module button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Feedback */
+.safe-browsing-module .feedback {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+/* Next & Restart buttons */
+.safe-browsing-module .next-button,
+.safe-browsing-module .restart-button {
+  margin-top: 1rem;
+  background-color: #10b981;
+}
+
+.safe-browsing-module .next-button:hover,
+.safe-browsing-module .restart-button:hover {
+  background-color: #059669;
+}

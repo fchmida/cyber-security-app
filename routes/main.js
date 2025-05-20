@@ -26,6 +26,16 @@ router.get('/modules/phishing', isAuthenticated, (req, res) => {
     res.render('modules/phishing', {user: req.session.user}); //pass the user to template if needed
 });
 
+// Modules page (private access)
+router.get('/modules/browsing', isAuthenticated, (req, res) => {
+    res.render('modules/browsing', {user: req.session.user}); //pass the user to template if needed
+});
+
+// Modules page (private access)
+router.get('/modules/eng', isAuthenticated, (req, res) => {
+    res.render('modules/eng', {user: req.session.user}); //pass the user to template if needed
+});
+
 // Quiz page (private access)
 router.get('/quiz', isAuthenticated, (req, res) => {
     res.render('quiz', {user: req.session.user});

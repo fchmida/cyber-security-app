@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cybersecurity Awareness Platform</title>
+  <title>Safe Browsing Practices</title>
   <link rel="stylesheet" href="/main.css"/>
 </head>
 <body>
@@ -15,9 +15,189 @@
   <nav>
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="modules">Modules</a></li>
-      <li><a href="quiz">Quiz</a></li>
-      <li><a href="contact">Contact</a></li>
-      <li><a href="users/login">Login</a></li>
+      <li><a href="/modules">Modules</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <% if (user) { %>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/users/login">Login</a></li>
+      <% } %>
     </ul>
   </nav>
+  <body>
+<div class="safe-browsing-module">
+  <main>
+    <!-- Info Slide 1 -->
+    <div class="slide active" id="slide-1">
+      <h2>Welcome to Safe Browsing Practices</h2>
+      <div class="info-box">
+        <p>In this module, you will learn important tips and best practices to browse the internet safely.</p>
+        <p>We will cover how to recognize secure websites, avoid scams, and protect your personal data online.</p>
+      </div>
+      <button onclick="nextSlide()">Start Learning</button>
+    </div>
+
+    <!-- Info Slide 2 -->
+    <div class="slide" id="slide-2">
+      <h2>What is Safe Browsing?</h2>
+      <div class="info-box">
+        <p>Safe browsing means using the internet in a way that protects you from cyber threats like malware, phishing, and identity theft.</p>
+        <p>This involves checking URLs, using HTTPS, avoiding suspicious links, and keeping your software updated.</p>
+      </div>
+      <button onclick="nextSlide()">Next</button>
+    </div>
+
+    <!-- Info Slide 3 -->
+    <div class="slide" id="slide-3">
+      <h2>Common Indicators of Unsafe Sites</h2>
+      <div class="info-box">
+        <ul>
+          <li>URLs with misspellings or extra words</li>
+          <li>Sites without HTTPS (no padlock icon)</li>
+          <li>Pop-ups asking for personal info</li>
+          <li>Unsolicited downloads or file prompts</li>
+          <li>Too-good-to-be-true offers</li>
+        </ul>
+      </div>
+      <button onclick="nextSlide()">Next</button>
+    </div>
+
+    <!-- Example 1 -->
+    <div class="slide" id="slide-4">
+      <h2>Example 1</h2>
+      <div class="example-box">
+        <p>You receive a popup saying "Your computer is infected! Click here to scan."</p>
+      </div>
+      <div class="buttons">
+        <button class="answer-button" onclick="answer(true)">Unsafe</button>
+        <button class="answer-button" onclick="answer(false)">Safe</button>
+        <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+      </div>
+      <p class="feedback" id="feedback-1"></p>
+    </div>
+
+    <!-- Example 2 -->
+    <div class="slide" id="slide-5">
+      <h2>Example 2</h2>
+      <div class="example-box">
+        <p>You visit your bank's website, and the URL starts with <code>https://</code> and shows a padlock icon.</p>
+      </div>
+      <div class="buttons">
+        <button class="answer-button" onclick="answer(false)">Unsafe</button>
+        <button class="answer-button" onclick="answer(true)">Safe</button>
+        <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+      </div>
+      <p class="feedback" id="feedback-2"></p>
+    </div>
+
+    <!-- Example 3 -->
+    <div class="slide" id="slide-6">
+      <h2>Example 3</h2>
+      <div class="example-box">
+        <p>You get an email with a link to download a file you did not expect from an unknown sender.</p>
+      </div>
+      <div class="buttons">
+        <button class="answer-button" onclick="answer(true)">Unsafe</button>
+        <button class="answer-button" onclick="answer(false)">Safe</button>
+        <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+      </div>
+      <p class="feedback" id="feedback-3"></p>
+    </div>
+
+    <!-- Final slide -->
+    <div class="slide" id="slide-7">
+      <h2>Great job!</h2>
+      <p id="summary-message"></p>
+      <button class="restart-button" onclick="restartModule()">Restart Module</button>
+    </div>
+  </main>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    let score = 0;
+
+    // true means unsafe, false means safe
+    const correctAnswers = [true, true, true];
+    const explanations = [
+      "✅ Correct! Popups warning you about infections and urging clicks are usually scams.",
+      "✅ Correct! A padlock and HTTPS indicate a secure connection.",
+      "✅ Correct! Unexpected downloads from unknown senders can contain malware."
+    ];
+    const incorrectExplanations = [
+      "❌ Incorrect. Such popups are common tricks to infect your system.",
+      "❌ Incorrect. HTTPS and the padlock indicate a secure site.",
+      "❌ Incorrect. Never download files from unknown or unexpected sources."
+    ];
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach(slide => slide.classList.remove('active'));
+      document.getElementById(`slide-${n}`).classList.add('active');
+
+      const slide = document.getElementById(`slide-${n}`);
+
+      // Reset buttons and feedback for example slides
+      if (n >= 4 && n <= 6) {
+        const answerBtns = slide.querySelectorAll('.answer-button');
+        answerBtns.forEach(btn => btn.disabled = false);
+
+        const nextBtn = slide.querySelector('.next-button');
+        if(nextBtn) nextBtn.disabled = true;
+
+        const feedback = slide.querySelector('.feedback');
+        if(feedback) {
+          feedback.textContent = '';
+          feedback.style.color = 'initial';
+        }
+      }
+
+      // Show summary on final slide
+      if(n === 7){
+        document.getElementById("summary-message").textContent = `You identified ${score} out of 3 unsafe browsing practices correctly.`;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < 7) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    }
+
+    function answer(userAnswer) {
+      const questionIndex = currentSlide - 4;
+      const feedback = document.getElementById(`feedback-${questionIndex + 1}`);
+      const slide = document.getElementById(`slide-${currentSlide}`);
+
+      // Disable answer buttons
+      const buttons = slide.querySelectorAll('.answer-button');
+      buttons.forEach(btn => btn.disabled = true);
+
+      // Enable next button
+      const nextBtn = slide.querySelector('.next-button');
+      if(nextBtn) nextBtn.disabled = false;
+
+      // Check correctness and update score
+      if (userAnswer === correctAnswers[questionIndex]) {
+        feedback.textContent = explanations[questionIndex];
+        feedback.style.color = '#16a34a'; // green
+        score++;
+      } else {
+        feedback.textContent = incorrectExplanations[questionIndex];
+        feedback.style.color = '#dc2626'; // red
+      }
+    }
+
+    function restartModule() {
+      score = 0;
+      currentSlide = 1;
+      showSlide(currentSlide);
+    }
+
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>
