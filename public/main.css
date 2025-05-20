@@ -250,6 +250,7 @@ button:hover {
     text-decoration: underline;
 }
 
+/* modules page */
 .modules-container a {
     color: #219EBC;
     text-decoration: none;
@@ -533,6 +534,22 @@ button:hover {
 .safe-browsing-module .next-button:hover,
 .safe-browsing-module .restart-button:hover {
   background-color: #059669;
+}
+
+.slide-image {
+  width: 100px;
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.example-box img {
+  width: 60px;
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* social eng */
