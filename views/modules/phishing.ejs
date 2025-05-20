@@ -15,9 +15,224 @@
   <nav>
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="modules">Modules</a></li>
-      <li><a href="quiz">Quiz</a></li>
-      <li><a href="contact">Contact</a></li>
-      <li><a href="users/login">Login</a></li>
+      <li><a href="/modules">Modules</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <% if (user) { %>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/users/login">Login</a></li>
+      <% } %>
     </ul>
   </nav>
+ <main>
+    <!-- Info Slide -->
+    <div class="slide active" id="slide-1">
+      <h2>Welcome to the Phishing Awareness Simulation</h2>
+      <div class="info-box">
+        <p>This simulation will present you with 5 email scenarios.</p>
+        <p>Your task: decide if each email is <strong>Phishing</strong> (dangerous/fake) or <strong>Safe</strong> (legitimate).</p>
+        <p>Look out for suspicious senders, urgent language, strange links, or anything that feels off.</p>
+        <p>After you answer, you'll get immediate feedback and explanation to help you learn.</p>
+        <p>Try your best to spot phishing attempts and improve your cybersecurity awareness!</p>
+      </div>
+      <button onclick="nextSlide()">Start Simulation</button>
+    </div>
+
+    <!-- Scenario 1 -->
+    <div class="slide" id="slide-2">
+      <h2>Scenario 1</h2>
+      <div class="email-box">
+        <div class="email-header">
+          <div><strong>From:</strong> support@paypalsecurity.com</div>
+          <div><strong>Subject:</strong> Urgent: Your account has been locked</div>
+        </div>
+        <div class="email-body">
+          “We noticed suspicious activity on your PayPal account. Please <a href="#">click here</a> to verify your identity.”
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="answer-button" onclick="answer(true)">Phishing</button>
+        <button class="answer-button" onclick="answer(false)">Safe</button>
+        <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+      </div>
+      <p class="feedback" id="feedback-1"></p>
+    </div>
+
+    <!-- Scenario 2 -->
+    <div class="slide" id="slide-3">
+      <h2>Scenario 2</h2>
+      <div class="email-box">
+        <div class="email-header">
+          <div><strong>From:</strong> hr@yourcompany.com</div>
+          <div><strong>Subject:</strong> New company benefits</div>
+        </div>
+        <div class="email-body">
+          “Hi! We’ve launched new benefits this quarter. Check the HR portal for details.”
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="answer-button" onclick="answer(false)">Safe</button>
+        <button class="answer-button" onclick="answer(true)">Phishing</button>
+        <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+      </div>
+      <p class="feedback" id="feedback-2"></p>
+    </div>
+
+    <!-- Scenario 3 -->
+    <div class="slide" id="slide-4">
+      <h2>Scenario 3</h2>
+      <div class="email-box">
+        <div class="email-header">
+          <div><strong>From:</strong> it-support@fake-link.com</div>
+          <div><strong>Subject:</strong> Password Expiration Notice</div>
+        </div>
+        <div class="email-body">
+          “Your password will expire in 24 hours. Click <a href="#">here</a> to update.”
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="answer-button" onclick="answer(true)">Phishing</button>
+        <button class="answer-button" onclick="answer(false)">Safe</button>
+        <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+      </div>
+      <p class="feedback" id="feedback-3"></p>
+    </div>
+
+    <!-- Scenario 4 -->
+    <div class="slide" id="slide-5">
+      <h2>Scenario 4</h2>
+      <div class="email-box">
+        <div class="email-header">
+          <div><strong>From:</strong> manager@yourcompany.com</div>
+          <div><strong>Subject:</strong> Meeting Reminder</div>
+        </div>
+        <div class="email-body">
+          “Reminder: Our weekly meeting is tomorrow at 10 AM in Conference Room B. See you there!”
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="answer-button" onclick="answer(false)">Safe</button>
+        <button class="answer-button" onclick="answer(true)">Phishing</button>
+        <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+      </div>
+      <p class="feedback" id="feedback-4"></p>
+    </div>
+
+    <!-- Scenario 5 -->
+    <div class="slide" id="slide-6">
+      <h2>Scenario 5</h2>
+      <div class="email-box">
+        <div class="email-header">
+          <div><strong>From:</strong> micr0s0ft-support.com</div>
+          <div><strong>Subject:</strong> Account Verification Required</div>
+        </div>
+        <div class="email-body">
+          “Please verify your Microsoft account immediately by clicking <a href="#">this link</a>.”
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="answer-button" onclick="answer(true)">Phishing</button>
+        <button class="answer-button" onclick="answer(false)">Safe</button>
+        <button class="next-button" onclick="nextSlide()" disabled>Next</button>
+      </div>
+      <p class="feedback" id="feedback-5"></p>
+    </div>
+
+    <!-- Final slide -->
+    <div class="slide" id="slide-7">
+      <h2>All Done!</h2>
+      <p id="summary-message"></p>
+      <button class="restart-button" onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+  </main>
+
+
+  <script>
+    let currentSlide = 1;
+    let score = 0;
+
+    const correctAnswers = [true, false, true, false, true];
+    const explanations = [
+      "✅ Correct! This is phishing: The domain 'paypalsecurity.com' is fake. Real emails come from 'paypal.com'.",
+      "✅ Correct! This message is safe: It comes from your real HR department and uses no links.",
+      "✅ Correct! This is phishing: The domain is suspicious, and it urges you to act fast via an unverified link.",
+      "✅ Correct! This is a safe internal email with no suspicious links or language.",
+      "✅ Correct! This is phishing: The sender 'micr0s0ft-support.com' is impersonating Microsoft."
+    ];
+
+    const incorrectExplanations = [
+      "❌ This was a phishing attempt. Always check domain names like 'paypalsecurity.com' — they look close to legit ones.",
+      "❌ This was a legitimate message. Don’t assume internal communication is suspicious without good reason.",
+      "❌ This was a phishing email. Never click urgent links without verifying the sender.",
+      "❌ This was a safe message. It came from a known employee and didn't request sensitive info.",
+      "❌ This was phishing. Watch for character substitutions like 'micr0s0ft' (with zeros instead of o's)."
+    ];
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach(slide => slide.classList.remove('active'));
+
+      document.getElementById(`slide-${n}`).classList.add('active');
+
+      const slide = document.getElementById(`slide-${n}`);
+
+      // Enable all buttons initially
+      const allButtons = slide.querySelectorAll('button');
+      allButtons.forEach(btn => btn.disabled = false);
+
+      if (n >= 2 && n <= correctAnswers.length + 1) {
+        const nextBtn = slide.querySelector('.next-button');
+        if (nextBtn) nextBtn.disabled = true;
+
+        const feedback = slide.querySelector('.feedback');
+        if (feedback) feedback.textContent = '';
+      }
+
+      if (n === correctAnswers.length + 2) {
+        document.getElementById("summary-message").textContent = `You got ${score} out of ${correctAnswers.length} correct.`;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < correctAnswers.length + 2) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    }
+
+    function answer(userAnswer) {
+      const questionIndex = currentSlide - 2;
+      const feedbackId = `feedback-${questionIndex + 1}`;
+      const feedback = document.getElementById(feedbackId);
+      const slide = document.getElementById(`slide-${currentSlide}`);
+
+      const buttons = slide.querySelectorAll('.answer-button');
+      buttons.forEach(btn => btn.disabled = true);
+
+      const nextBtn = slide.querySelector('.next-button');
+      if (nextBtn) nextBtn.disabled = false;
+
+      if (userAnswer === correctAnswers[questionIndex]) {
+        feedback.textContent = explanations[questionIndex];
+        feedback.style.color = '#16a34a'; // green
+        score++;
+      } else {
+        feedback.textContent = incorrectExplanations[questionIndex];
+        feedback.style.color = '#dc2626'; // red
+      }
+    }
+
+    function restartQuiz() {
+      score = 0;
+      currentSlide = 1;
+      showSlide(currentSlide);
+    }
+
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>
+
+
