@@ -41,10 +41,45 @@ router.get('/quiz', isAuthenticated, (req, res) => {
     res.render('quiz', {user: req.session.user});
 });
 
-// Contact page (public access)
-router.get('/contact', function (req, res) {
-    res.render('contact.ejs');
+// POST Quiz Submission
+router.post('/quiz', (req, res) => {
+  const answers = req.body;
+
+  let score = 0;
+  if (answers.q1 === 'c') score++;
+  if (answers.q2 === 'b') score++;
+  if (answers.q3 === 'b') score++;
+  if (answers.q4 === 'b') score++;
+
+  // Save score to DB here if user is logged in
+
+  res.render('quiz-result.ejs', { score }); // Create this file to display results
 });
 
+// Contact page (public access)
+router.get('/contact', function (req, res) {
+  res.render('contact.ejs', { error: null, success: null });
+});
+
+// POST: Handle form submission
+router.post('/contact', (req, res) => {
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.render('contact.ejs', {
+      error: 'Please fill in all fields.',
+      success: null
+    });
+  }
+
+  // Here you can do whatever you want with the data (e.g. send email, save to DB, etc.)
+  console.log('Contact form submitted:', { name, email, message });
+
+  // Respond with success message
+  res.render('contact.ejs', {
+    error: null,
+    success: 'Thank you for your message! We will get back to you shortly.'
+  });
+});
 // Export the router
 module.exports = router;

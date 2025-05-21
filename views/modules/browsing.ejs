@@ -66,8 +66,45 @@
       <button onclick="nextSlide()">Next</button>
     </div>
 
+    <!-- Slide 4: Pharming Attacks -->
+<div class="slide" id="slide-4">
+  <h2>What is a Pharming Attack?</h2>
+  <div class="info-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/3067/3067833.png" alt="Pharming icon" class="slide-image"/>
+    <p>Pharming is a type of cyber attack where a legitimate website is spoofed by manipulating DNS records or your computer’s settings. Even if you type the correct address, you may be redirected to a fake version.</p>
+    <p>Always check for HTTPS and the padlock icon, and avoid clicking suspicious links to reduce the risk of pharming attacks.</p>
+  </div>
+  <button onclick="nextSlide()">Next</button>
+</div>
+
+<!-- Slide 5: Zero-Day Vulnerabilities -->
+<div class="slide" id="slide-5">
+  <h2>Zero-Day Vulnerabilities</h2>
+  <div class="info-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828665.png" alt="Zero-day icon" class="slide-image"/>
+    <p>Zero-day vulnerabilities are flaws in software that are unknown to the vendor. Hackers can exploit these before the developer creates a fix.</p>
+    <p>Keep your browser and extensions up to date to reduce exposure to zero-day threats.</p>
+  </div>
+  <button onclick="nextSlide()">Next</button>
+</div>
+
+<!-- Slide 6: Public Wi-Fi Safety -->
+<div class="slide" id="slide-6">
+  <h2>Safe Browsing on Public Wi-Fi</h2>
+  <div class="info-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/14099/14099112.png" alt="Public Wi-Fi icon" class="slide-image"/>
+    <p>Public Wi-Fi is convenient but often insecure. Hackers can intercept your data on open networks.</p>
+    <ul>
+      <li>✅ Avoid entering passwords or banking info on public Wi-Fi</li>
+      <li>✅ Use a VPN when browsing on open networks</li>
+      <li>✅ Disable auto-connect to unknown networks</li>
+    </ul>
+  </div>
+  <button onclick="nextSlide()">Next</button>
+</div>
+
     <!-- Example 1 -->
-    <div class="slide" id="slide-4">
+    <div class="slide" id="slide-7">
       <h2>Example 1</h2>
       <div class="example-box">
         <img src="https://cdn-icons-png.flaticon.com/512/2050/2050129.png" alt="popup alert icon" class="slide-image"/>
@@ -82,10 +119,10 @@
     </div>
 
     <!-- Example 2 -->
-    <div class="slide" id="slide-5">
+    <div class="slide" id="slide-8">
       <h2>Example 2</h2>
       <div class="example-box">
-         <img src="https://cdn-icons-png.flaticon.com/512/456/456112.pn" alt="HTTPS padlock icon" class="slide-image"/>
+         <img src="https://cdn-icons-png.flaticon.com/512/456/456112.png" alt="HTTPS padlock icon" class="slide-image"/>
         <p>You visit your bank's website, and the URL starts with <code>https://</code> and shows a padlock icon.</p>
       </div>
       <div class="buttons">
@@ -97,7 +134,7 @@
     </div>
 
     <!-- Example 3 -->
-    <div class="slide" id="slide-6">
+    <div class="slide" id="slide-9">
       <h2>Example 3</h2>
       <div class="example-box">
                  <img src="https://cdn-icons-png.flaticon.com/512/9717/9717844.png" alt="suspicious email icon" class="slide-image"/>
@@ -112,7 +149,7 @@
     </div>
 
     <!-- Final slide -->
-    <div class="slide" id="slide-7">
+    <div class="slide" id="slide-10">
       <h2>All done!</h2>
       <p id="summary-message"></p>
       <button class="restart-button" onclick="restartModule()">Restart Module</button>
@@ -160,20 +197,20 @@
       }
 
       // Show summary on final slide
-      if(n === 7){
+      if(n === 10){
         document.getElementById("summary-message").textContent = `You identified ${score} out of 3 unsafe browsing practices correctly.`;
       }
     }
 
     function nextSlide() {
-      if (currentSlide < 7) {
+      if (currentSlide < 10) {
         currentSlide++;
         showSlide(currentSlide);
       }
     }
 
     function answer(userAnswer) {
-      const questionIndex = currentSlide - 4;
+      const questionIndex = currentSlide - 7;
       const feedback = document.getElementById(`feedback-${questionIndex + 1}`);
       const slide = document.getElementById(`slide-${currentSlide}`);
 

@@ -27,7 +27,7 @@
     </ul>
   </nav>
 
-  <main>
+   <main>
     <!-- Slide 1 -->
     <section class="slide active" id="slide-1">
       <h2>What is Password Security?</h2>
@@ -62,16 +62,47 @@
       <button onclick="nextSlide()">Next</button>
     </section>
 
-    <!-- Slide 5 -->
+    <!-- Quiz Question 1 -->
     <section class="slide" id="slide-5">
       <h2>Choose the Best 2FA Option</h2>
-      <form id="quizForm" onsubmit="checkAnswer(event)">
+      <form id="quizForm1" onsubmit="return false;">
         <label><input type="radio" name="q1" value="a" /> Email code</label><br />
         <label><input type="radio" name="q1" value="b" /> SMS code</label><br />
         <label><input type="radio" name="q1" value="c" /> Authenticator app (e.g. Google Auth)</label><br />
-        <button type="submit">Submit</button>
-        <div id="quizResult" class="feedback"></div>
       </form>
+      <div id="feedback-q1" class="feedback"></div>
+      <button onclick="onNextButtonClick(1)">Next</button>
+    </section>
+
+    <!-- Quiz Question 2 -->
+    <section class="slide" id="slide-6">
+      <h2>Which of these is NOT a good password practice?</h2>
+      <form id="quizForm2" onsubmit="return false;">
+        <label><input type="radio" name="q2" value="a" /> Using a password manager</label><br />
+        <label><input type="radio" name="q2" value="b" /> Using your birthdate</label><br />
+        <label><input type="radio" name="q2" value="c" /> Using long and complex passwords</label><br />
+      </form>
+      <div id="feedback-q2" class="feedback"></div>
+      <button onclick="onNextButtonClick(2)">Next</button>
+    </section>
+
+    <!-- Quiz Question 3 -->
+    <section class="slide" id="slide-7">
+      <h2>When should you change your password?</h2>
+      <form id="quizForm3" onsubmit="return false;">
+        <label><input type="radio" name="q3" value="a" /> Only when you forget it</label><br />
+        <label><input type="radio" name="q3" value="b" /> When you suspect a breach or compromise</label><br />
+        <label><input type="radio" name="q3" value="c" /> Never, just keep the same password</label><br />
+      </form>
+      <div id="feedback-q3" class="feedback"></div>
+      <button onclick="onNextButtonClick(3)">Next</button>
+    </section>
+
+    <!-- Final Slide -->
+    <section class="slide" id="slide-8">
+      <h2>All done!</h2>
+      <p id="finalScore"></p>
+      <button onclick="restartModule()">Restart Module</button>
     </section>
   </main>
 
@@ -80,57 +111,97 @@
   </footer>
 
   <script>
-    let current = 1;
+ let current = 1;
+let score = 0;
+let answeredQuestions = {};
+let awaitingNextClick = false; // track if waiting for next click to advance
 
-    function nextSlide() {
-      const currentSlide = document.getElementById(`slide-${current}`);
-      const next = document.getElementById(`slide-${++current}`);
-      if (currentSlide) currentSlide.classList.remove('active');
-      if (next) next.classList.add('active');
+function nextSlide() {
+  const currentSlide = document.getElementById(`slide-${current}`);
+  const next = document.getElementById(`slide-${++current}`);
+  if (currentSlide) currentSlide.classList.remove('active');
+  if (next) next.classList.add('active');
+}
+
+function checkAnswer(qNum) {
+  const selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+  const feedback = document.getElementById(`feedback-q${qNum}`);
+  const answers = {
+    1: "c", // Authenticator app
+    2: "b", // Your birthdate (example)
+    3: "b"  // When you suspect a breach (example)
+  };
+
+  if (!selected) {
+    feedback.textContent = "Please select an answer.";
+    feedback.style.color = "red";
+    return false; // no valid answer selected
+  }
+
+  if (answeredQuestions[qNum]) {
+    return true; // already answered, no changes
+  }
+
+  if (selected.value === answers[qNum]) {
+    feedback.textContent = "✅ Correct!";
+    feedback.style.color = "green";
+    score++;
+  } else {
+    feedback.textContent = "❌ Incorrect.";
+    feedback.style.color = "red";
+  }
+
+  answeredQuestions[qNum] = true;
+  return true;
+}
+
+function onNextButtonClick(qNum) {
+  if (!answeredQuestions[qNum]) {
+    // First click: check answer and show feedback
+    const valid = checkAnswer(qNum);
+    if (valid) {
+      awaitingNextClick = true; // next click will advance slide
     }
-
-    document.getElementById("passwordInput").addEventListener("input", function () {
-      const pwd = this.value;
-      const feedback = document.getElementById("passwordFeedback");
-      const strength = checkPasswordStrength(pwd);
-      feedback.textContent = strength.message;
-      feedback.style.color = strength.color;
-    });
-
-    function checkPasswordStrength(pwd) {
-      const lengthOK = pwd.length >= 8;
-      const hasUpper = /[A-Z]/.test(pwd);
-      const hasLower = /[a-z]/.test(pwd);
-      const hasNum = /\d/.test(pwd);
-      const hasSym = /[\W_]/.test(pwd);
-
-      if (!lengthOK) return { message: "❌ Too short", color: "red" };
-      if (hasUpper && hasLower && hasNum && hasSym) {
-        return { message: "✅ Strong password", color: "green" };
-      } else {
-        return { message: "⚠️ Use a mix of letters, numbers & symbols", color: "orange" };
-      }
+  } else if (awaitingNextClick) {
+    // Second click: advance to next slide
+    awaitingNextClick = false;
+    if (current === 7) {
+      showFinalResult();
+    } else {
+      nextSlide();
     }
+  }
+}
 
-    function checkAnswer(e) {
-      e.preventDefault();
-      const result = document.querySelector('input[name="q1"]:checked');
-      const feedback = document.getElementById("quizResult");
+function showFinalResult() {
+  document.getElementById(`slide-${current}`).classList.remove("active");
+  document.getElementById("slide-8").classList.add("active");
+  document.getElementById("finalScore").textContent = `You got ${score} out of 3 correct.`;
+  current = 8;
+}
 
-      if (!result) {
-        feedback.textContent = "Please select an answer.";
-        feedback.style.color = "red";
-        return;
-      }
+function restartModule() {
+  score = 0;
+  current = 1;
+  answeredQuestions = {};
+  awaitingNextClick = false;
+  showSlide(current);
+  for (let i = 1; i <= 3; i++) {
+    const radios = document.getElementsByName(`q${i}`);
+    radios.forEach(r => r.checked = false);
+    const feedback = document.getElementById(`feedback-q${i}`);
+    if (feedback) feedback.textContent = '';
+  }
+}
 
-      if (result.value === "c") {
-        feedback.textContent = "✅ Correct! Authenticator apps are most secure.";
-        feedback.style.color = "green";
-      } else {
-        feedback.textContent = "⚠️ Not quite. Authenticator apps are better than SMS or email.";
-        feedback.style.color = "orange";
-      }
-    }
+function showSlide(n) {
+  document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+  const currentSlide = document.getElementById(`slide-${n}`);
+  if (currentSlide) currentSlide.classList.add('active');
+}
+
+showSlide(current);
+
   </script>
 
 </body>

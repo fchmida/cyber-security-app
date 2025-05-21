@@ -1,48 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity Awareness Platform</title>
-    <link rel="stylesheet" href="/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Cybersecurity Awareness</title>
+  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="/contact.css"> <!-- New CSS just for this page -->
 </head>
 <body>
-<header>
-    <h1>Contact us - Cybersecurity Awareness</h1>
-</header>
 
-<nav>
+  <header>
+    <h1>Contact Us</h1>
+  </header>
+
+  <nav>
     <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="modules">Modules</a></li>
-        <li><a href="quiz">Quiz</a></li>
-        <li><a href="contact">Contact</a></li>
-        <li><a href="users/login">Login</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/modules">Modules</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/users/login">Login</a></li>
     </ul>
-</nav>
+  </nav>
 
-<main>
-    <section class="contact-container">
-        <h2>Get in Touch</h2>
-        <p> If you have any questions or concerns, feel free to reach out to us.</p>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required><br>
+  <main class="contact-container">
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br>
+ <!-- ✅ Contact Form -->
+<form action="/contact" method="POST" class="contact-form">
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name" required>
 
-            <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="5" required></textarea><br>
-            
-            <button type="submit">Send Message</button>
-        </form>
-        <p>Or contact us directly at: <a href="mailto:fahmidaghoznovi@gmail.com">fahmidaghoznovi@gmail.com</a></p>
-    </section>
+  <label for="email">Email:</label>
+  <input type="email" name="email" id="email" required>
 
+  <label for="message">Message:</label>
+  <textarea name="message" id="message" rows="5" required></textarea>
+
+  <button type="submit">Send Message</button>
+</form>
+
+<!-- ✅ Feedback messages (moved below form) -->
+<div class="form-alerts">
+  <% if (error) { %>
+    <div class="alert error"><%= error %></div>
+  <% } %>
+  <% if (success) { %>
+    <div class="alert success"><%= success %></div>
+  <% } %>
+</div>
 </main>
-<footer>
+
+  <footer>
     <p>&copy; 2025 Cybersecurity Awareness Platform</p>
-</footer>
+  </footer>
+
 </body>
 </html>

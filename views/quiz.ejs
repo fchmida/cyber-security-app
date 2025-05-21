@@ -1,43 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity Awareness Platform</title>
-    <link rel="stylesheet" href="/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cybersecurity Master Quiz</title>
+  <link rel="stylesheet" href="/main.css" />
+  <link rel="stylesheet" href="/quiz.css" />
 </head>
 <body>
-<header>
-    <h1>Cybersecurity Awareness Quiz</h1>
-</header>
+  <header>
+    <h1>Cybersecurity Awareness Platform</h1>
+  </header>
 
-<nav>
+  <nav>
     <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="modules">Modules</a></li>
-        <li><a href="quiz">Quiz</a></li>
-        <li><a href="contact">Contact</a></li>
-        <li><a href="dashboard">Dashboard</a></li>
-        <li><a href="users/login">Login</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/modules">Modules</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <% if (user) { %>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/users/login">Login</a></li>
+      <% } %>
     </ul>
-</nav>
+  </nav>
 
-<main>
-    <section class="quiz-container">
-        <h2>Question 1:</h2>
-        <p>What is the strongest type of password?</p>
-        <form>
-            <label><input type="radio" name="q1" value="a"> a. 123456</label><br>
-            <label><input type="radio" name="q1" value="b"> b. Password</label><br>
-            <label><input type="radio" name="q1" value="c"> c. A mix of letters, numbers, and symbols</label><br>
-            <label><input type="radio" name="q1" value="d"> d. Your pet's name</label><br>
-            <button type="submit">Submit</button>
-        </form>
-    </section>
-</main>
+  <main class="quiz-container">
+    <div id="quiz-slide" class="slide active">
+      <div class="progress-bar">
+        <div id="progress-text">Question 1 of 10</div>
+        <div class="progress-track">
+          <div id="progress-fill"></div>
+        </div>
+      </div>
 
-<footer>
-    <p>&copy; 2025 Cybersecurity Awareness Platform</p>
-</footer>
+      <h2 id="question-title"></h2>
+      <img id="question-image" class="question-image" src="" alt="" style="display:none;" />
+      <div class="answers" id="answers-container"></div>
+      <p class="feedback" id="feedback"></p>
+      <button id="next-btn" onclick="nextQuestion()" style="display:none;">Next</button>
+    </div>
+
+    <div id="result-slide" class="slide">
+      <h2>Quiz Complete 🎉</h2>
+      <p class="score-summary" id="final-score"></p>
+      <button onclick="restartQuiz()">Retake Quiz</button>
+      <a href="/modules"><button>Back to Modules</button></a>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      {
+        question: "Which of these passwords is the strongest?",
+        options: [
+          "iloveyou123",
+          "P@55w0rd!",
+          "Th1sIs$ecur3#2024",
+          "123456"
+        ],
+        correct: 2,
+        explanation: "A strong password uses length, symbols, upper/lowercase, and no personal info."
+      },
+      {
+        question: "What’s the biggest sign an email might be phishing?",
+        image: "/images/fake_email_example.png",
+        options: [
+          "Greeting by name",
+          "Poor grammar and urgent tone",
+          "No attachments",
+          "It includes your company logo"
+        ],
+        correct: 1,
+        explanation: "Phishing emails often use bad grammar and urgency to trick users."
+      },
+      {
+        question: "What’s the best method of 2FA?",
+        options: [
+          "SMS code",
+          "Email link",
+          "Authenticator app",
+          "Security questions"
+        ],
+        correct: 2,
+        explanation: "Authenticator apps are more secure and harder to intercept than SMS or email."
+      },
+      {
+        question: "True or False: You should use the same password everywhere for convenience.",
+        options: ["True", "False"],
+        correct: 1,
+        explanation: "Using the same password increases risk. One breach compromises all."
+      },
+      {
+        question: "Which social engineering tactic is used when someone pretends to be IT staff?",
+        options: [
+          "Pharming",
+          "Phishing",
+          "Pretexting",
+          "Dumpster diving"
+        ],
+        correct: 2,
+        explanation: "Pretexting is when attackers pretend to be someone trustworthy."
+      },
+      {
+        question: "What is a 'zero-day' vulnerability?",
+        options: [
+          "A vulnerability that has been patched for zero days",
+          "A vulnerability unknown to the vendor and public",
+          "A vulnerability in a device that’s zero years old",
+          "A vulnerability that only happens on the first day of the month"
+        ],
+        correct: 1,
+        explanation: "Zero-day vulnerabilities are unknown to the vendor, making them very dangerous."
+      },
+      {
+        question: "Which is NOT a recommended practice to secure Wi-Fi?",
+        options: [
+          "Use WPA3 encryption",
+          "Disable SSID broadcast",
+          "Use default router passwords",
+          "Use a strong Wi-Fi password"
+        ],
+        correct: 2,
+        explanation: "Using default passwords is insecure and should be avoided."
+      },
+      {
+        question: "What is 'pharming'?",
+        options: [
+          "Tricking users to a fake website via DNS hijacking",
+          "Sending spam emails to harvest data",
+          "Pretending to be someone else on the phone",
+          "Hacking someone's social media"
+        ],
+        correct: 0,
+        explanation: "Pharming redirects users to fake sites often via DNS compromise."
+      },
+      {
+        question: "Which of these tools is used for network vulnerability scanning?",
+        options: [
+          "Nmap",
+          "Photoshop",
+          "Slack",
+          "WordPress"
+        ],
+        correct: 0,
+        explanation: "Nmap is a popular network scanning tool."
+      },
+      {
+        question: "What should you do if you receive an unexpected email attachment?",
+        options: [
+          "Open it immediately",
+          "Scan it with antivirus first",
+          "Reply asking for confirmation",
+          "Delete it without opening"
+        ],
+        correct: 3,
+        explanation: "Deleting unexpected attachments is safest; scanning is good but deletion is best if suspicious."
+      }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function showQuestion(index) {
+      const q = questions[index];
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("next-btn").style.display = "none";
+
+      document.getElementById("question-title").textContent = q.question;
+      const img = document.getElementById("question-image");
+      if (q.image) {
+        img.src = q.image;
+        img.style.display = "block";
+      } else {
+        img.style.display = "none";
+      }
+
+      // Update progress bar text and fill
+      const progressText = document.getElementById("progress-text");
+      progressText.textContent = `Question ${index + 1} of ${questions.length}`;
+
+      const progressFill = document.getElementById("progress-fill");
+      const progressPercent = ((index) / questions.length) * 100;
+      progressFill.style.width = `${progressPercent}%`;
+
+      const container = document.getElementById("answers-container");
+      container.innerHTML = "";
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => selectAnswer(i);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(selected) {
+      const q = questions[currentQ];
+      const feedback = document.getElementById("feedback");
+      const nextBtn = document.getElementById("next-btn");
+
+      if (selected === q.correct) {
+        score++;
+        feedback.textContent = `✅ Correct! ${q.explanation}`;
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = `❌ Incorrect. ${q.explanation}`;
+        feedback.style.color = "red";
+      }
+
+      document.querySelectorAll("#answers-container button").forEach(btn => btn.disabled = true);
+      nextBtn.style.display = "inline-block";
+    }
+
+    function nextQuestion() {
+      currentQ++;
+      if (currentQ < questions.length) {
+        showQuestion(currentQ);
+      } else {
+        document.getElementById("quiz-slide").classList.remove("active");
+        document.getElementById("result-slide").classList.add("active");
+        document.getElementById("final-score").textContent = `You got ${score} out of ${questions.length} correct.`;
+        // Fill bar 100% on completion
+        document.getElementById("progress-fill").style.width = `100%`;
+        document.getElementById("progress-text").textContent = "Quiz Complete!";
+      }
+    }
+
+    function restartQuiz() {
+      score = 0;
+      currentQ = 0;
+      showQuestion(0);
+      document.getElementById("quiz-slide").classList.add("active");
+      document.getElementById("result-slide").classList.remove("active");
+      // Reset progress bar
+      document.getElementById("progress-fill").style.width = `0%`;
+      document.getElementById("progress-text").textContent = `Question 1 of ${questions.length}`;
+    }
+
+    // Start quiz initially
+    showQuestion(currentQ);
+  </script>
 </body>
 </html>
