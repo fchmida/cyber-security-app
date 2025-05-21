@@ -10,22 +10,25 @@
 
   <!-- Header and Navbar -->
   <header>
+  <div class="header-content">
     <h1>Cybersecurity Awareness Platform</h1>
-  </header>
-  <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/modules">Modules</a></li>
-      <li><a href="/quiz">Quiz</a></li>
-      <li><a href="/contact">Contact</a></li>
-      <% if (user) { %>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/modules">Modules</a></li>
+        <li><a href="/quiz">Quiz</a></li>
+        <li><a href="/contact">Contact</a></li>
         <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/users/logout">Logout</a></li>
-      <% } else { %>
-        <li><a href="/users/login">Login</a></li>
-      <% } %>
-    </ul>
-  </nav>
+        
+        <% if (user) { %>
+      <li><a href="/users/logout">Logout</a></li>
+    <% } else { %>
+      <li><a href="/users/login">Login</a></li>
+    <% } %>
+      </ul>
+    </nav>
+  </div>
+</header>
 
    <main>
     <!-- Slide 1 -->

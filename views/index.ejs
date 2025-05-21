@@ -7,64 +7,64 @@
   <link rel="stylesheet" href="/main.css"/>
 </head>
 <body>
+ <% if (flash && flash.message) { %>
+  <div class="flash-message"><%= flash.message %></div>
+<% } %>
 
-  <header>
+ <header>
+  <div class="header-content">
     <h1>Cybersecurity Awareness Platform</h1>
-  </header>
-
-  <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="modules">Modules</a></li>
-      <li><a href="quiz">Quiz</a></li>
-      <li><a href="contact">Contact</a></li>
-      <li><a href="dashboard">Dashboard</a></li>
-      <li><a href="users/login">Login</a></li>
-    </ul>
-  </nav>
-
-  <main>
-    <!-- Home Section -->
-    <div class="card" id="home">
-      <h2>Welcome to Cybersecurity Awareness</h2>
-      <p>Learn how to protect yourself from common cyber threats through interactive modules and quizzes.</p>
-    </div>
-
-    <!-- Modules Section -->
-    <div class="card" id="modules">
-      <h2>Educational Modules</h2>
+    <nav>
       <ul>
-        <li>Password Security & Two-Factor Authentication</li>
-        <li>Phishing & Social Engineering Awareness</li>
-        <li>Safe Browsing Practices</li>
-        <li>Mitigating Social Engineering in a Business Context</li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/modules">Modules</a></li>
+        <li><a href="/quiz">Quiz</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        
+        <% if (user) { %>
+      <li><a href="/users/logout">Logout</a></li>
+    <% } else { %>
+      <li><a href="/users/login">Login</a></li>
+    <% } %>
       </ul>
-    </div>
+    </nav>
+  </div>
+</header>
 
-    <!-- Quiz Section -->
-    <div class="card" id="quizzes">
-      <h2>Take a Quiz</h2>
-      <p>Test your knowledge with our cybersecurity quizzes.</p>
-      <button onclick="startQuiz()">Start Quiz</button>
-    </div>
+  <!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h2>Welcome to Cybersecurity Awareness</h2>
+    <p>Protect yourself from cyber threats with our expert resources and quizzes.</p>
+  </div>
+</section>
 
-    <!-- Contact Section -->
-    <div class="card" id="contact">
-      <h2>Contact Us</h2>
-      <p>Need help or have questions? Get in touch with our team.</p>
-      <p>Email: support@cyberaware.com</p>
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature">
+      <img src="https://cdn-icons-png.flaticon.com/512/1042/1042350.png" alt="Learning Modules" />
+      <h3>Learn Essential Cybersecurity Skills</h3>
+      <p>Browse our structured modules to learn password safety, phishing awareness, and more.</p>
+      <a href="/modules" class="button">Explore Modules</a>
     </div>
-  </main>
+    <div class="feature">
+      <img src="https://cdn-icons-png.flaticon.com/512/5678/5678202.png" alt="Quiz" />
+      <h3>Test Your Knowledge</h3>
+      <p>Take quizzes after modules to reinforce your cybersecurity awareness.</p>
+      <a href="/quiz" class="button">Take a Quiz</a>
+    </div>
+    <div class="feature">
+      <img src="https://cdn-icons-png.flaticon.com/512/9374/9374926.png" alt="Contact Support" />
+      <h3>Need Help?</h3>
+      <p>Contact our team for support, questions, or technical issues anytime.</p>
+      <a href="/contact" class="button">Contact Us</a>
+    </div>
+  </section>
 
   <footer>
     <p>&copy; 2025 Cybersecurity Awareness Platform</p>
   </footer>
-
-  <script>
-    function startQuiz() {
-      alert("Quiz feature coming soon!");
-    }
-  </script>
 
 </body>
 </html>

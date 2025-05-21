@@ -7,8 +7,14 @@ function startQuiz() {
 }
 
 // Home page (public access)
-router.get('/', function (req, res) {
-    res.render('index.ejs');
+router.get('/', (req, res) => {
+    const flash = req.session.flash;
+    delete req.session.flash; // 💨 Clear the flash after displaying it once
+
+    res.render('index', {
+        user: req.session.user,
+        flash
+    });
 });
 
 // Modules page (private access)

@@ -20,7 +20,7 @@ router.get('/dashboard', isAuthenticated, (req, res) => {
         }
 
         console.log("Scores retrieved:", results);  // Debug log
-        res.render('dashboard', {
+        res.render('dashboard.ejs', {
             user: req.session.user,
             scores: results || []
         });
@@ -129,8 +129,9 @@ router.post('/login', function (req, res) {
                     username: result[0].username
                 };
 
+                req.session.flash = {message: `Welcome back, ${result[0].username}!`}; //flash msg
                 console.log("Session data set:", req.session.user);
-                return res.redirect('/users/dashboard');  // redirects to dashboard after login
+                return res.redirect('/');  // redirects to home after login
             } else {
                 console.log("Incorrect password.");
                 return res.render('login.ejs', {
@@ -141,6 +142,18 @@ router.post('/login', function (req, res) {
         });
     });
 });
+
+// Logout route (only accessible when logged in)
+router.get('/logout', isAuthenticated, (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error("Error destroying session during logout:", err);
+            return res.status(500).send("Could not log out. Please try again.");
+        }
+        res.redirect('/users/login?message=logged_out');
+    });
+});
+
 
 // Export the router
 module.exports = router;

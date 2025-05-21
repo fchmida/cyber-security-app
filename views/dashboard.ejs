@@ -9,19 +9,25 @@
 <body>
 
   <header>
-    <h1>Welcome, <%= user.username %>!</h1>
-  </header>
-
-  <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/modules">Modules</a></li>
-      <li><a href="/quiz">Quiz</a></li>
-      <li><a href="/contact">Contact</a></li>
-      <li><a href="dashboard">Dashboard</a></li>
+  <div class="header-content">
+    <h1>Cybersecurity Awareness Platform</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/modules">Modules</a></li>
+        <li><a href="/quiz">Quiz</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        
+        <% if (user) { %>
       <li><a href="/users/logout">Logout</a></li>
-    </ul>
-  </nav>
+    <% } else { %>
+      <li><a href="/users/login">Login</a></li>
+    <% } %>
+      </ul>
+    </nav>
+  </div>
+</header>
 
   <main>
     <div class="card" id="dashboard">
