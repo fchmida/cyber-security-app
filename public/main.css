@@ -551,27 +551,27 @@ main {
 
     
 
-    .slide {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      background: white;
-      padding: 2em;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-width: 600px;
-      width: 100%;
-      animation: fadeIn 0.6s ease;
-    }
+.slide {
+display: none;
+flex-direction: column;
+align-items: center;
+text-align: center;
+background: white;
+padding: 2em;
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+max-width: 600px;
+width: 100%;
+animation: fadeIn 0.6s ease;
+}
 
-    .slide.active {
-      display: flex;
-    }
+.slide.active {
+display: flex;
+}
 
     
 
-    /* phishing page */
+/* phishing page */
  /* General layout */
 .phishing-module body {
   font-family: Arial, sans-serif;

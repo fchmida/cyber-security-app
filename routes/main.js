@@ -78,7 +78,6 @@ router.post('/contact', (req, res) => {
     });
   }
 
-  // Here you can do whatever you want with the data (e.g. send email, save to DB, etc.)
   console.log('Contact form submitted:', { name, email, message });
 
   // Respond with success message

@@ -33,10 +33,6 @@ db.connect((err) => {
 });
 global.db = db;
 
-// Define our application-specific data
-// app.locals.financeData = {appName:"Personal Finance Tracker"};
-;
-
 app.use(session({
   secret: 'yourSecretKey',
   resave: false,

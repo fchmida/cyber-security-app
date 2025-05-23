@@ -28,7 +28,6 @@ router.get('/dashboard', isAuthenticated, (req, res) => {
 });
 
 
-
 //register routes
 router.get('/register', function (req, res) {
     res.render('register.ejs');
